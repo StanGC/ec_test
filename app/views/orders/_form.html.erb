@@ -1,0 +1,30 @@
+<%= simple_form_for order do |f| %>
+  <h3>商品資訊</h3>
+  <%= f.simple_fields_for :product_lists do |product_list| %>
+    <%= product_list.input :product_name, label: '名稱' %>
+    <%= product_list.input :product_price, label: '單價' %>
+    <%= product_list.input :quantity, label: '數量' %>
+    <hr>
+  <% end %>
+
+  <h3>寄送資訊</h3>
+  <div class='group'>
+    <%= f.input :billing_name, label: '購買人姓名' %>
+  </div>
+
+  <div class='group'>
+    <%= f.input :billing_address, label: '購買人地址' %>
+  </div>
+
+  <div class='group'>
+    <%= f.input :shipping_name, label: '收貨人姓名' %>
+  </div>
+
+  <div class='group'>
+    <%= f.input :shipping_address, label: '收貨人地址' %>
+  </div>
+
+  <hr>
+
+  <%= f.submit 'Submit', data: { disable_with: 'Submitting...' } %>
+<% end %>
