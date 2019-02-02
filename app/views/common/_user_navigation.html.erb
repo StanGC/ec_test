@@ -1,4 +1,10 @@
 <ul class='nav navbar-nav navbar-right'>
+  <li>
+    <%= link_to '#' do  %>
+      購物車 <i class='fa fa-shopping-cart'> </i> ( <%= current_cart.products.count %> )
+    <% end %>
+  </li>
+
   <% if user_signed_in? %>
     <li class='nav-item'>
       <%= link_to('登出', destroy_user_session_path, method: :delete, class: 'nav-link') %>
