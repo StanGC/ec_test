@@ -12,4 +12,8 @@ class Order < ApplicationRecord
   def generate_token
     self.token = SecureRandom.hex(8)
   end
+
+  def to_param
+    token
+  end
 end
