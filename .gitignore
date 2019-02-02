@@ -31,3 +31,4 @@
 /config/master.key
 
 /config/app.yml
+/config/database.yml
