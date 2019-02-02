@@ -27,9 +27,24 @@ class OrdersController < ApplicationController
     @product_lists = @order.product_lists
   end
 
+  def edit
+    @order = Order.find_by_token(params[:id])
+  end
+
+  def update
+    @order = Order.find_by_token(params[:id])
+
+    if @order.update(order_params)
+      redirect_to order_path(@order)
+    else
+      render :edit
+    end
+  end
+
   private
 
   def order_params
-    params.require(:order).permit(:billing_name, :billing_address, :shipping_name, :shipping_address)
+    params.require(:order).permit(:billing_name, :billing_address, :shipping_name, :shipping_address,
+                                  product_lists_attributes: [:id, :product_name, :product_price, :quantity])
   end
 end

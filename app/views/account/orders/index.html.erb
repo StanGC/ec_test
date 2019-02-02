@@ -5,6 +5,7 @@
     <tr>
       <th>#</th>
       <th>建立時間</th>
+      <th>其他</th>
     </tr>
   </thead>
 
@@ -13,6 +14,7 @@
       <tr>
         <td> <%= link_to order.id, order_path(order) %> </td>
         <td> <%= order.created_at.to_s(:long) %> </td>
+        <td> <%= link_to '訂單修改', edit_order_path(order) %> </td>
       </tr>
     <% end %>
   </tbody>
