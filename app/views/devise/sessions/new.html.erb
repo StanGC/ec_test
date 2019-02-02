@@ -18,6 +18,12 @@
     </div>
   <% end -%>
 
+  <div>
+    <p>安全驗證<p>
+    <%= flash[:recaptcha_error] %>
+    <%= recaptcha_tags %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Log in" %>
   </div>
