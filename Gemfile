@@ -37,6 +37,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'recaptcha', require: 'recaptcha/rails'
 
+# Front related
+gem 'bootstrap-sass'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
