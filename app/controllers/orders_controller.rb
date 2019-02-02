@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:create]
+  before_action :find_order, only: [:show, :edit, :update]
+  before_action :check_order_is_own, only: [:show, :edit, :update]
 
   def create
     order = Order.new(order_params)
@@ -23,17 +25,13 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find_by_token(params[:id])
     @product_lists = @order.product_lists
   end
 
   def edit
-    @order = Order.find_by_token(params[:id])
   end
 
   def update
-    @order = Order.find_by_token(params[:id])
-
     if @order.update(order_params)
       redirect_to order_path(@order)
     else
@@ -42,6 +40,17 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def find_order
+    @order = Order.find_by_token(params[:id])
+  end
+
+  def check_order_is_own
+    if current_user.id != @order.user_id
+      flash[:alert] = '請重新選擇訂單'
+      redirect_to account_orders_path
+    end
+  end
 
   def order_params
     params.require(:order).permit(:billing_name, :billing_address, :shipping_name, :shipping_address,
