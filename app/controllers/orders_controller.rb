@@ -40,6 +40,18 @@ class OrdersController < ApplicationController
     end
   end
 
+  def get_product
+    product = Product.find_by(title: params[:product_title]) if params[:product_title].present?
+
+    if request.xhr?
+      respond_to do |format|
+        format.json {
+          render json: { product: product }
+        }
+      end
+    end
+  end
+
   private
 
   def find_order

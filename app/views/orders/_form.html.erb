@@ -1,30 +1,52 @@
 <%= simple_form_for order do |f| %>
   <h3>商品資訊</h3>
   <%= f.simple_fields_for :product_lists do |product_list| %>
-    <%= product_list.input :product_name, label: '名稱' %>
-    <%= product_list.input :product_price, label: '單價' %>
-    <%= product_list.input :quantity, label: '數量' %>
+    <%= product_list.input :product_id, as: :hidden %>
+    <%= product_list.input :product_name, collection: render_products_name_option, label: '名稱', selected: product_list.object.product_id, include_blank: false, input_html: { id: 'product_name' } %>
+    <%= product_list.input :product_price, readonly: true, label: '單價', input_html: { id: 'product_price' } %>
+    數量 <%= product_list.collection_select(:quantity, Product.all, :quantity, :quantity, { selected: product_list.object.quantity }) %>
     <hr>
   <% end %>
 
   <h3>寄送資訊</h3>
-  <div class='group'>
-    <%= f.input :billing_name, label: '購買人姓名' %>
-  </div>
-
-  <div class='group'>
-    <%= f.input :billing_address, label: '購買人地址' %>
-  </div>
-
-  <div class='group'>
-    <%= f.input :shipping_name, label: '收貨人姓名' %>
-  </div>
-
-  <div class='group'>
-    <%= f.input :shipping_address, label: '收貨人地址' %>
-  </div>
-
+  <%= f.input :id, as: :hidden %>
+  <%= f.input :billing_name, label: '購買人姓名' %>
+  <%= f.input :billing_address, label: '購買人地址' %>
+  <%= f.input :shipping_name, label: '收貨人姓名' %>
+  <%= f.input :shipping_address, label: '收貨人地址' %>
   <hr>
 
   <%= f.submit 'Submit', data: { disable_with: 'Submitting...' } %>
 <% end %>
+
+<script>
+  $(document).ready(function() {
+    $('#product_name').on('change', function() {
+      $.ajax({
+        url: '/orders/get_product',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          product_title: this.value
+        },
+        success: function(response) {
+          var quantity = response.product.quantity
+          var i = 0;
+          var x = quantity
+
+          $('#product_price')[0].value = response.product.price
+
+          $('#order_product_lists_attributes_0_quantity').empty()
+          while (i < x) {
+            i++;
+            quantity--;
+            $('#order_product_lists_attributes_0_quantity').append('<option value="' + (quantity + 1) + '">' + (quantity + 1) + '</option>');
+          }
+        },
+        error: function() {
+          console.log('Fail');
+        }
+      });
+    });
+  });
+</script>
