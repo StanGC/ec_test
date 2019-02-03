@@ -39,6 +39,7 @@ gem 'recaptcha', require: 'recaptcha/rails'
 
 # Front related
 gem 'bootstrap-sass'
+gem 'jquery-rails'
 
 # Form builder
 gem 'simple_form'
