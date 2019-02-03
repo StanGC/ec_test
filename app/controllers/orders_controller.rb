@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:create]
   before_action :find_order, only: [:show, :edit, :update]
-  before_action :check_order_is_own, only: [:show, :edit, :update]
+  before_action :check_order_is_own, only: [:show, :edit]
 
   def create
     order = Order.new(order_params)
